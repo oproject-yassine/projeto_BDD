@@ -1,0 +1,94 @@
+Exerciço N1:
+
+SELECT A.nome AS name, B.nome AS dependente FROM
+
+SELECT cliente.nome AS cliente, cliente_conta.id_conta AS id, cliente_conta.dependente AS dependente FROM cliente
+
+JOIN cliente_conta 
+
+ON cliente.id = cliente_conta.id_cliente) AS A
+
+JOIN
+
+SELECT cliente.nome AS nome, cliente_conta.id_conta AS id, cliente_conta.dependente AS dependente FROM cliente
+
+JOIN cliente_conta 
+
+ON Cliente.id = cliente_conta.id_conta) AS B
+
+ON A.id = B.id
+
+WHERE A.dependente=1 && B.dependente=1
+
+GROUP BY name;
+
+
+
+Exerciço N2:
+
+SELECT cliente.nome AS cliente, conta.numero AS conta, count(id_cliente_conta) AS maximumtrans
+
+FROM transacao
+
+JOIN cliente_conta
+
+ON cliente_conta.id_cliente = transacao.id_cliente_conta
+
+join cliente 
+
+ON cliente.id = cliente_conta.id_cliente
+
+JOIN conta 
+
+ON cliente_conta.id_conta = conta.id
+
+GROUP BY transacao.id_cliente_conta
+
+ORDER BY maximumtrans DESC LIMIT 5;
+
+SELECT cliente.nome AS cliente, conta.numero AS conta, count(id_cliente_conta) AS minimumtrans
+
+FROM transacao
+
+JOIN cliente_conta
+
+ON cliente_conta.id_cliente = transacao.id_cliente_conta
+
+JOIN cliente 
+
+ON cliente.id = cliente_conta.id_cliente
+
+JOIN conta 
+
+ON cliente_conta.id_conta = conta.id
+
+GROUP BY transacao.id_cliente_conta
+
+ORDER BY minimumtrans DESC LIMIT 5;
+
+
+
+Exerciço N3:
+
+SELECT cliente.nome AS cliente, conta.numero as conta,
+SUM (CASE WHEN id_tipo_transacao = 1 THEN valor
+   WHEN id_tipo_transacao = 2 THEN (-1)*valor 
+   WHEN id_tipo_transacao = 3 THEN (-1)*valor  
+   WHEN id_tipo_transacao = 4 THEN valor 
+   ELSE 0 END) AS SUM
+
+FROM transacao
+
+JOIN cliente_conta
+
+ON cliente_conta.id_cliente = transacao.id_cliente_conta
+
+JOIN cliente 
+
+ON cliente.id = cliente_conta.id_cliente
+
+JOIN conta 
+
+ON cliente_conta.id_conta = conta.id)
+
+GROUP BY id_cliente_conta;
